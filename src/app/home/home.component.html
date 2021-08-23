@@ -1,2 +1,99 @@
-<p>Login successfuly !!!!</p>
-<p>welcome {{ services.loginUserName }}</p>
+<div id="viewport">
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <header>
+        <a href="#">Staff Leave App</a>
+      </header>
+      <ul class="nav">
+        <li>
+          <a href="#">
+            <i class="zmdi zmdi-view-dashboard"></i> <i class="fas fa-home"></i> &nbsp;Home
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- Content -->
+    <div id="content">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#"><i class="zmdi zmdi-notifications text-danger"></i>
+              </a>
+            </li>
+            <li>
+              <div class="dropdown" style="float:right;">
+
+                <button class="dropbtn"><img style="width: 30px; height:30px;" src="/assets/images/tm7.png" alt=""></button>
+                <div class="dropdown-content">
+                  <a href="#">Logout</a>
+                  
+                </div>
+              </div>
+
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-left">
+            <nav class="navbar">
+              <span style="position: absolute; margin-top: 20px; margin-left: 0px;"><i class="fas fa-search"></i></span>
+              <input style="margin-top: 15px; margin-left: 20px;" type="text" class="form-control" name="partName" placeholder="Enter Part name to search ">
+            </nav>
+          </ul>
+        </div>
+      </nav>
+      <div class="container-fluid">
+        <div class="container">
+          <div class="row justify-content-end">
+            <button style="position: relative; margin-left: 1000px; background-color: rgb(85, 206, 243); border: none;" class="btn btn-success"><i class="fas fa-plus-circle"></i>&nbsp;Apply Leave</button>
+          </div>
+        </div>
+          <!-- <h1>Simple Sidebar</h1>
+          <p>
+            Make sure to keep all page content within the 
+            <code>#content</code>.
+          </p> -->
+      
+          
+        <div class="container">
+          <div class="col-12">
+            <div class="row justify-content-end ml-2">
+              <!-- <button class="btn btn-success" (click)="goToViewPage()">Add New interview</button> -->
+            </div>
+            <div>
+              
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th><i class="fa fa-sort"></i>&nbsp;Id </th>
+                  <th><i class="fa fa-sort"></i>&nbsp;FirstName</th>
+                  <th>lastName</th>
+                  <th>PhoneNumber</th>
+                  <th>Address</th>
+                  <th>Dob</th>
+                  <th>CasualLeave</th>
+                  <th>AnnualLeave</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let staffdetail of staffdata">
+                  <td>{{ staffdetail.id}}</td>
+                  <td>{{ staffdetail.firstName}}</td>
+                  <td>{{ staffdetail.lastName}}</td>
+                  <td>{{ staffdetail.phoneNumber}}</td>
+                  <td>{{ staffdetail.address}}</td>
+                  <td>{{ staffdetail.dob}}</td>
+                  <td>{{ staffdetail.casualLeave}}</td>
+                  <td>{{ staffdetail.annualLeave}}</td>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle" style="cursor: pointer;" ></i>&nbsp;&nbsp;&nbsp;<span></span></td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- <pagination-controls class="text-center my-pagination" ></pagination-controls> -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
