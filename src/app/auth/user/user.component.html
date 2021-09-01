@@ -1,0 +1,152 @@
+<div id="viewport">
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <header>
+        <a href="#">Staff Leave App</a>
+      </header>
+      <ul class="nav">
+        <li>
+          <a routerLink="/home">
+            <i class="zmdi zmdi-view-dashboard"></i> <i class="fas fa-home"></i> &nbsp;Home
+          </a>
+        </li>
+        <li>
+          <a routerLink="/users">
+            <i class="zmdi zmdi-view-dashboard"></i> <i class="fas fa-user-circle"></i> &nbsp;Users
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- Content -->
+    <div id="content">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#"><i class="zmdi zmdi-notifications text-danger"></i>
+              </a>
+            </li>
+            <li>
+              <div class="dropdown" style="float:right;">
+
+                <button class="dropbtn"><img style="width: 30px; height:30px;" src="/assets/images/tm7.png" alt=""></button>
+                <div class="dropdown-content">
+                  <a style="cursor: pointer;" type="sumbit" (click)="onLogout()">Logout</a>
+                </div>
+              </div>
+
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-left">
+            <nav class="navbar">
+              <span style="position: absolute; margin-top: 20px; margin-left: 0px;"><i class="fas fa-search"></i></span>
+              <input style="margin-top: 15px; margin-left: 20px;" type="text" class="form-control" name="partName" placeholder="Enter Part name to search ">
+            </nav>
+          </ul>
+        </div>
+      </nav>
+      <div class="container-fluid">
+        
+         <!--update  Modal -->
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="modal fade" id="myUpdateModal" role="dialog">
+                    <div class="modal-content"  style="height: 50vh; width: 600px; margin: auto;">
+                        <div class="modal-header" style="background-color: #EEEEEE;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h1 class="modal-title" style="margin-left: 40px;">Update staff details</h1>
+                        </div>
+                        <div class="modal-body" style=" padding-top: 0px;">
+                            <div class="row">
+                                <div class="jumbotron" style="border-radius: 10px;">
+                                <form #f="ngForm" name="form" (ngSubmit)="onSubmit(f)" autocomplete="off">
+                                    <div class="form-group">
+                                    <input [(ngModel)]="staff.id" type="hidden" class="form-control"   name="userId">
+                                    </div>
+                                    <div class="form-group">
+                                    <label >First Name</label>
+                                    <input [(ngModel)]="staff.firstName" type="text" class="form-control"   name="FirstName">
+                                    <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['firstName'] }}</span>
+                                    </div>
+                                    <div class="form-group">
+                                    <label >Last Name</label>
+                                    <input [(ngModel)]="staff.lastName" type="text" class="form-control" name="LastName">
+                                    <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['lastName'] }}</span>
+                                    </div>
+                                    <div class="form-group">
+                                    <label >Phone Number</label>
+                                    <input [(ngModel)]="staff.phoneNumber" type="text" class="form-control" name="PhoneNumber">
+                                    <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['phoneNumber'] }}</span>
+                                    </div>
+                                    <div class="form-group">
+                                    <label >Address</label>
+                                    <input [(ngModel)]="staff.address" type="text" class="form-control" name="Address">
+                                    <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['address'] }}</span>
+                                    </div>
+                                    <div class="form-group">
+                                    <label >DOB</label>
+                                    <input [(ngModel)]="staff.dob" type="date" class="form-control" name="Dob">
+                                    <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['dob'] }}</span>
+                                    </div>
+                                    
+                                    <div class="form-group" style="display: none;">
+                                    <label >Casual Leave</label>
+                                    <input [(ngModel)]="staff.casualLeave" type="number" max="7" class="form-control" name="CasualLeave">
+                                    <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['casualLeave'] }}</span>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                    <label >Annual Leave</label>
+                                    <input [(ngModel)]="staff.annualLeave" type="number" maxlength="2" min="0" max="14" class="form-control" name="AnnualLeave">
+                                    <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['annualLeave'] }}</span>
+                                    </div>
+                                    <button style="position: absolute; margin-left: 420px;" type="submit" class="btn btn-success">{{ isEdit ? 'update' : 'Update' }}</button>
+                                </form>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+         <!--update Model end -->
+          <!-- <h1>Simple Sidebar</h1>
+          <p>
+            Make sure to keep all page content within the 
+            <code>#content</code>.
+          </p> -->
+        <div class="container">
+          <div class="col-12">
+            <div class="row justify-content-end ml-2">
+              <!-- <button class="btn btn-success" (click)="goToViewPage()">Add New interview</button> -->
+            </div>
+            <div>
+              
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th><i class="fa fa-sort"></i>&nbsp;Id </th>
+                  <th><i class="fa fa-sort"></i>&nbsp;UserName</th>
+                  <th>Email</th>
+                  <th>Detail Update</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users; index as i;">
+                  <td >{{ i+1 }}</td>
+                  <td>{{ user.userName }}</td>
+                  <td>{{ user.email }}</td>
+                  <td><button (click)="sendId(user.id)" data-toggle="modal" data-target="#myUpdateModal" class="btn btn-warning">Update</button></td>
+                  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle" style="cursor: pointer;" ></i>&nbsp;&nbsp;&nbsp;<span></span></td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- <pagination-controls class="text-center my-pagination" ></pagination-controls> -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>

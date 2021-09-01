@@ -16,6 +16,9 @@ import { HeaderComponent } from './header/header.component'
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2OrderModule } from 'ng2-order-pipe';
+import { UserComponent } from './auth/user/user.component';
+import { UserHomeComponent } from './user-home/user-home.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +27,10 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
     DashboardComponent,
     SideNavComponent,
     ToolbarComponent,
-    HeaderComponent
+    HeaderComponent,
+    UserComponent,
+    UserHomeComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,98 @@
+<div style="width: 100%; height: 100%;">
+    <div id="viewport">
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <header>
+                <a>Staff Leave App</a>
+            </header>
+            <ul class="nav">
+                <li>
+                    <a routerLink="/home">
+                        <i class="zmdi zmdi-view-dashboard"></i> <i class="fas fa-home"></i> &nbsp;Home
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- Content -->
+        <div id="content">
+            <nav class="navbar navbar-default" style="width: auto;">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#"><i class="zmdi zmdi-notifications text-danger"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown" style="float:right;">
+                                <button class="dropbtn"><img style="width: 30px; height:30px;"
+                                        src="https://png.pngitem.com/pimgs/s/151-1511463_blueberry-tab-bar-notification-notification-icon-png-transparent.png"
+                                        alt=""></button>
+                                <div class="dropdown-content">
+                                    <p>notification count</p>
+                                    <a style="cursor: pointer;" type="sumbit">LogoutLogoutLogoutLogoutLogout</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown" style="float:right;">
+                                <button class="dropbtn"><img style="width: 30px; height:30px; border-radius: 30px;"
+                                        src="{{ staffdetails.profileImage }}" alt=""></button>
+                                <div class="dropdown-content">
+                                    <a style="cursor: pointer;" type="sumbit" data-toggle="modal"
+                                        data-target="#myProfileModal">Change Profile</a>
+                                    <a style="cursor: pointer;" type="sumbit" (click)="onLogout()">Logout</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-left">
+                        <nav class="navbar">
+                            <span style="position: absolute; margin-top: 20px; margin-left: 0px;"><i
+                                    class="fas fa-search"></i></span>
+                            <input style="margin-top: 15px; margin-left: 20px;" type="text" class="form-control"
+                                name="partName" placeholder="Enter Part name to search ">
+                        </nav>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="container">
+            <!--apply change profile  Modal -->
+            <div class="modal fade" id="myProfileModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #EEEEEE;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h1 class="modal-title" style="margin-left: 40px;">Chage Profile</h1>
+                        </div>
+                        <div class="model-body">
+                            <div class="row" style="padding: 20px">
+                                <form action="" enctype="multipart/form-data"  #af="ngForm" name="avatarform" (ngSubmit)="onAvatarUpdate(af)" autocomplete="off">
+                                  <div class="form-group">
+                                    <input [(ngModel)]="avatar.UserId" type="hidden" class="form-control" name="UserId">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="">Select avatar image</label>                
+                                    <input [(ngModel)]="avatar.MyFile" type="file" required (change)="handleFileInput($event)" class="form-control" name="MyFile">
+                                    <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['FromDate']
+                                      }}</span>
+                                  </div>
+                                  <button style="position: absolute; margin-left: 485px;" type="submit" class="btn btn-success">{{ isEdit ? 'update' : 'Update' }}</button>
+                                </form>
+                              </div>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                        </div>
+                    </div>
+                </div>
+                <!--apply Model end -->
+            </div>
+            <!-- apply-profile-mode -->
+        </div>
+    </div>
+</div>
+<div>
+    <router-outlet></router-outlet>
+</div>

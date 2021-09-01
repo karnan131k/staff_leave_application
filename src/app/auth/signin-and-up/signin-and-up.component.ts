@@ -15,6 +15,14 @@ export class SigninAndUpComponent implements OnInit {
     UserName:"",
     Password:''
   }
+  registerModel={
+    username:"",
+    email:"",
+    password:""
+  }
+  errorMessage: string;
+  errorRegisterMessage: string;
+  registersuccessmessage: string;
   
   constructor(private service:SigninAndSignupService, private router:Router) { }
   signup($event){
@@ -38,21 +46,55 @@ export class SigninAndUpComponent implements OnInit {
 
   
   ngOnInit(): void {
+    if(localStorage.getItem('token') != null){
+      this.router.navigateByUrl('/home');
+    }else{
+      this.router.navigateByUrl('/');
+    }
   }
   onSubmit(form:NgForm){
     this.service.login(form.value).subscribe(
     (res:any)=>{
       localStorage.setItem('token',res.token);
-      console.log(res.user)
+      console.log(res.user,res.token)
       this.service.loginUserName=res.user;
-      this.router.navigateByUrl('/home');
+      var payLoad = JSON.parse(window.atob(localStorage.getItem('token').split('.')[1]));
+      if (payLoad.given_name=="Admin") {
+        this.router.navigateByUrl('/home');
+      }else if(payLoad.given_name=="User"){
+        this.router.navigateByUrl('/user-home');
+      }
+      
     },
     err=>{
       if(err.status == 401){
-        console.log(err)
+        this.errorMessage = "username or password is invalid"
+        console.log(err.error)
       }
     }
     );
+  }
+  onRegister(form:NgForm){
+    console.log(form.value);
+    this.service.register(form.value).subscribe(
+      (res:any)=>{
+        console.log(res)
+        this.registersuccessmessage = res.message;
+        setTimeout(() => {
+          this.registersuccessmessage="";
+        }, 1000);
+      },
+      err=>{
+        console.log(err)
+        if(err.status == 401){
+          this.errorRegisterMessage = "Registration is invalid"
+          console.log(err.error)
+          setTimeout(() => {
+            this.errorRegisterMessage="";
+          }, 1000);
+        }
+      }
+    )
   }
 
 }
