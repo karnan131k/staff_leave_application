@@ -68,4 +68,13 @@ export class SigninAndSignupService {
   UpdateLeave(formData, id):Observable<any>{
     return this.http.post('https://localhost:44368/api/Leave/Update' + "/" + id,formData)
   }
+
+  getApproveLeaves(id:any):Observable<any>{
+    return this.http.get('https://localhost:44368/api/Leave/Approve' + "/" + id);
+  }
+
+  ApproveLeave(formData, id):Observable<any>{
+    return this.http.post('https://localhost:44368/api/Leave/Approve' + "/" + id,formData)
+  }
+
 }

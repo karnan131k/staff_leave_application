@@ -24,13 +24,14 @@
                         </li>
                         <li>
                             <div class="dropdown" style="float:right;">
-                                <button class="dropbtn"><img style="width: 30px; height:30px;"
+                                <button class="dropbtn" data-toggle="modal" data-target="#myLeavesModal"><img style="width: 30px; height:30px; cursor: pointer;" 
                                         src="https://png.pngitem.com/pimgs/s/151-1511463_blueberry-tab-bar-notification-notification-icon-png-transparent.png"
-                                        alt=""></button>
-                                <div class="dropdown-content">
-                                    <p>notification count</p>
-                                    <a style="cursor: pointer;" type="sumbit">LogoutLogoutLogoutLogoutLogout</a>
-                                </div>
+                                        alt="">
+                                 <div style="position: relative; margin-left: 22px; margin-top: -40px; cursor: pointer;"><span  class="badge badge-light">{{ notificationCount }}</span></div> 
+                                </button>
+                                <!-- <div class="dropdown-content">
+                                    <a style="cursor: pointer;" *ngFor="let approvedByDetail of approvedByDetails; index as i" type="sumbit" id="approveModel{{ i }}">Request {{ i+1 }}</a>
+                                </div> -->
                             </div>
                         </li>
                         <li>
@@ -68,19 +69,24 @@
                         </div>
                         <div class="model-body">
                             <div class="row" style="padding: 20px">
-                                <form action="" enctype="multipart/form-data"  #af="ngForm" name="avatarform" (ngSubmit)="onAvatarUpdate(af)" autocomplete="off">
-                                  <div class="form-group">
-                                    <input [(ngModel)]="avatar.UserId" type="hidden" class="form-control" name="UserId">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="">Select avatar image</label>                
-                                    <input [(ngModel)]="avatar.MyFile" type="file" required (change)="handleFileInput($event)" class="form-control" name="MyFile">
-                                    <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['FromDate']
-                                      }}</span>
-                                  </div>
-                                  <button style="position: absolute; margin-left: 485px;" type="submit" class="btn btn-success">{{ isEdit ? 'update' : 'Update' }}</button>
+                                <form action="" enctype="multipart/form-data" #af="ngForm" name="avatarform"
+                                    (ngSubmit)="onAvatarUpdate(af)" autocomplete="off">
+                                    <div class="form-group">
+                                        <input [(ngModel)]="avatar.UserId" type="hidden" class="form-control"
+                                            name="UserId">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Select avatar image</label>
+                                        <input [(ngModel)]="avatar.MyFile" type="file" required
+                                            (change)="handleFileInput($event)" class="form-control" name="MyFile">
+                                        <span class="help-block" style="color: red;" *ngIf="errorList">{{
+                                            errorList['FromDate']
+                                            }}</span>
+                                    </div>
+                                    <button style="position: absolute; margin-left: 485px;" type="submit"
+                                        class="btn btn-success">{{ isEdit ? 'update' : 'Update' }}</button>
                                 </form>
-                              </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
@@ -91,6 +97,136 @@
             </div>
             <!-- apply-profile-mode -->
         </div>
+         <!-- apply-get-leave-mode -->
+         <div class="modal fade" id="myLeavesModal" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content" style="padding: 20px;">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h1 class="modal-title">Request Leaves</h1>
+                </div>
+                <div class="modal-body" style="width: auto;">
+                  <div class="row">
+                    <div class="">
+                      <div class="panel-group" id="accordion" *ngFor="let approvedByDetail of approvedByDetails; index as i; orderBy: reverse"  >
+                        <div class="panel panel-default" >
+                          <div class="panel-heading">
+                            <h4 class="panel-title">
+                              <a data-toggle="collapse" aria-expanded="false" data-parent="#accordion" href="#{{ approvedByDetail.id }}">Leave {{ i+1 }}</a>
+                            </h4>
+                          </div>
+                          <div id="{{ approvedByDetail.id }}" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                              <div class="row justify-content-between">
+                                <div class="" style="padding: 20px;">
+                                 <form action="" #appprovl="ngForm" name="approvalform" (ngSubmit)="onLeaveApproveUpdate(appprovl)"  autocomplete="off">
+                                  <table class="table table-responsive">
+                                    <tr>
+                                      <td>From Date</td>
+                                      <td>
+                                        <div class="form-group">
+                                          <input [ngModel]="approvedByDetail.fromDate | date:'yyyy-MM-dd'" (ngModelChange)="updatedate($event)" disabled pattern="dd/MM/yyyy" type="date" required   class="form-control" name="FromDate">
+                                          <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['FromDate']
+                                            }}</span>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>To Date</td>
+                                      <!-- <td>{{ approvedByDetail.toDate | date: 'dd/MM/yyyy' }}</td> -->
+                                      <td>
+                                        <div class="form-group">
+                                          <input [ngModel]="approvedByDetail.toDate | date:'yyyy-MM-dd'" (ngModelChange)="updatedate($event)" disabled type="date" required   class="form-control" name="ToDate">
+                                          <span class="help-block" style="color: red;"  *ngIf="errorList">{{ errorList['ToDate']
+                                            }}</span>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>Comments</td>
+                                      <!-- <td>{{ approvedByDetail.comments }}</td> -->
+                                      <td>
+                                        <div class="form-group">
+                                          <textarea [(ngModel)]="approvedByDetail.comments"   type="text" class="form-control"
+                                            name="Comments" ></textarea>
+                                          <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['Comments']
+                                            }}</span>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>Approved By</td>
+                                      <!-- <td *ngIf="approvedByDetail.approvedBy==0; else elseBlock">Not Approved</td> -->
+                                      <td>
+                                        <div class="form-group">
+                                       
+                                          <select [(ngModel)]="approvedByDetail.approvedBy" disabled  class="form-control" id="sel1" name="ApprovedBy" >
+                                          <option *ngFor="let staff of staffdata; index as i" value="{{ approvedByDetail.approvedBy }}">{{ staff.firstName }}</option>
+                                          </select>
+                                          <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['address']
+                                            }}</span>
+                                        </div>
+                                        <ng-template #elseBlock>
+                                          
+                                        </ng-template>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>Leave Type</td>
+                                      <td>
+                                        <div class="form-group">
+                                          <select [(ngModel)]="approvedByDetail.leaveType"  disabled class="form-control" id="sel1" name="LeaveType" >
+                                            <option   value="{{ approvedByDetail.leaveType }}">Casual Leave</option>
+                                            <option  value="{{ approvedByDetail.leaveType }}">Annual Leave</option>
+                                          </select>
+                                          <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['address']
+                                            }}</span>
+                                        </div>
+                                        <ng-template #elseBlock>
+                                          
+                                        </ng-template>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>Status</td>
+                                      <!-- <td *ngIf="approvedByDetail.status==0; else elseBlock">Pending</td> -->
+                                      <td>
+                                        <div class="form-group">
+                                          <input [(ngModel)]="approvedByDetail.status" type="text" class="form-control" name="Status" placeholder="0 for pending 1 for approve 2 for reject">
+                                          <span class="help-block" style="color: red;" *ngIf="errorList">{{ errorList['dob'] }}</span>
+                                        </div> 
+                                      </td>
+                                      <ng-template #elseBlock>
+                                        
+                                      </ng-template>
+                                    </tr>
+                                    <tr>
+                                      <input [(ngModel)]="approvedByDetail.status"  type="hidden" class="form-control" name="Status" >
+                                    </tr>
+                                    <tr>
+                                      <button style="position: absolute; margin-left: 480px;" type="submit" (click)="setLeaveId(approvedByDetail.id)" ><i class="fas fa-check"></i><span class="tooltiptext"></span></button>
+                                    </tr>
+                                  </table>
+                                 </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div> 
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                </div>
+              </div>
+            </div>
+            <!--apply Model end -->
+          </div>
+          <!--apply change profile  Modal -->
+
     </div>
 </div>
 <div>
